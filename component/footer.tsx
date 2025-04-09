@@ -1,7 +1,20 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, KeyboardEvent } from "react";
+import { Send } from "lucide-react";
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  message: string;
+  setMessage: (message: string) => void;
+  sendMessage: (e?: React.FormEvent) => void;
+  isRoomSelected: boolean;
+}
+
+const Footer: React.FC<FooterProps> = ({
+  message,
+  setMessage,
+  sendMessage,
+  isRoomSelected,
+}) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // テキストエリアの高さを自動調整する関数
@@ -10,7 +23,18 @@ const Footer: React.FC = () => {
     if (!textarea) return;
 
     textarea.style.height = "auto";
-    textarea.style.height = `${Math.max(64, textarea.scrollHeight)}px`;
+    textarea.style.height = `${Math.min(
+      120,
+      Math.max(64, textarea.scrollHeight)
+    )}px`;
+  };
+
+  // Enterキーで送信、Shift+Enterで改行
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
   };
 
   useEffect(() => {
@@ -22,15 +46,47 @@ const Footer: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    adjustHeight();
+  }, [message]);
+
+  if (!isRoomSelected) {
+    return (
+      <div className="border-t border-gray-300 p-2 fixed bottom-0 w-full bg-white">
+        <p className="text-center text-gray-500">
+          ルームを選択するとメッセージを送信できます
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div className="border-t border-gray-300 p-2 fixed bottom-0 w-full bg-white">
-      <textarea
-        ref={textareaRef}
-        placeholder="メッセージを入力"
-        className="w-full border-none outline-none p-2 resize-none rounded"
-        rows={2}
-        onChange={adjustHeight}
-      />
+    <div className="border-t border-gray-300 p-3 fixed bottom-0 w-dvw bg-white">
+      <form
+        onSubmit={sendMessage}
+        className="flex items-center gap-2 justify-center"
+      >
+        <textarea
+          ref={textareaRef}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="メッセージを入力"
+          className="flex-grow border border-none rounded-lg p-1 resize-none overflow-hidden focus:outline-none focus:border-none"
+          style={{ minHeight: "64px" }}
+        />
+        <button
+          type="submit"
+          disabled={!message.trim()}
+          className={`p-3 rounded-full ${
+            message.trim()
+              ? "bg-blue-500 hover:bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-500 cursor-not-allowed"
+          }`}
+        >
+          <Send size={20} />
+        </button>
+      </form>
     </div>
   );
 };

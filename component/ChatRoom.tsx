@@ -379,15 +379,13 @@ export default function ChatRoomContent({
 
   return (
     <div
-      className={`flex flex-col h-full ${
-        isOpen ? "md:w-full w-1/2 right-0" : "w-dvw"
-      }`}
+      className={`flex flex-col h-full ${isOpen ? "w-full right-0" : "w-dvw"}`}
     >
       {/* アップロードされたファイル一覧 */}
       {hasAccess && uploadedFiles.length > 0 && (
         <div className="bg-gray-50 p-4 border-b border-gray-200">
-          <div className="flex items-center justify-between space-x-4 mb-4">
-            <div className="text-lg font-semibold">ファイル</div>
+          <div className="flex md:flex-row flex-col items-center md:justify-between md:space-x-4 mb-4">
+            <div className="text-lg font-semibold text-center">ファイル</div>
             <label className="block">
               <input
                 type="file"

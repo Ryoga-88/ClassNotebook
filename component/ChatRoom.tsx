@@ -394,7 +394,7 @@ export default function ChatRoomContent({
                 disabled={isUploading}
               />
               <div className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-2 rounded text-center cursor-pointer transition duration-200">
-                {isUploading ? "アップロード中..." : "アップロード"}
+                {isUploading ? "アップロード中" : "アップロード"}
               </div>
             </label>
           </div>

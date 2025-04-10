@@ -407,7 +407,7 @@ export default function ChatRoomContent({
                 key={index}
                 className="bg-white p-3 rounded-lg shadow-sm border border-gray-200"
               >
-                <div className="flex items-center justify-between mb-2">
+                <div className="flex flex-col items-center justify-between mb-2">
                   <p className="font-medium text-gray-800 truncate">
                     {file.fileName}
                   </p>

@@ -20,13 +20,15 @@ const Header = ({
     <div className="flex flex-row justify-between items-center p-1 border-b-1 border-gray-300">
       <div className="p-2 flex flex-row items-center gap-2">
         <button
-          className="z-10 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors"
+          className="z-10 p-2 bg-white hover:bg-gray-100 transition-colors"
           onClick={toggleSidebar}
           aria-label={isOpen ? "サイドバーを閉じる" : "サイドバーを開く"}
         >
           {isOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
-        <div className="p-2">{selectedRoom?.title || "ルーム未選択"}</div>
+        <div className="p-2 font-bold text-xl">
+          {selectedRoom?.title || "未選択"}
+        </div>
       </div>
       <div className="flex items-center gap-4 mr-2">
         <button

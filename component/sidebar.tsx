@@ -29,16 +29,21 @@ const Sidebar = ({
     }
   };
 
+  // 日本語の辞書順にチャットルームをソート
+  const sortedChatRooms = [...chatRooms].sort((a, b) =>
+    a.title.localeCompare(b.title, "ja")
+  );
+
   return (
     <div className="h-full flex flex-col">
       <div className="p-4 border-b border-gray-200">
-        <h2 className="text-xl font-semibold text-center">課題名</h2>
+        <h2 className="text-xl font-semibold text-center">授業名</h2>
       </div>
 
       <div className="flex-grow overflow-y-auto p-2">
-        {chatRooms.length > 0 ? (
+        {sortedChatRooms.length > 0 ? (
           <ul className="space-y-1">
-            {chatRooms.map((room) => (
+            {sortedChatRooms.map((room) => (
               <li
                 key={room.id}
                 className={`
@@ -80,7 +85,7 @@ const Sidebar = ({
               value={newRoomTitle}
               onChange={(e) => setNewRoomTitle(e.target.value)}
               placeholder="ルーム名を入力"
-              className="px-3 py-2 border rounded-md"
+              className="px-3 py-2 border border-gray-200 focus:outline-none rounded-md"
               autoFocus
             />
             <div className="flex space-x-2 md:flex-row flex-col space-y-2 items-center">

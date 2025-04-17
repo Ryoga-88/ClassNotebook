@@ -10,7 +10,7 @@ export const sendEmail = onObjectFinalized(async (event) => {
     service: "gmail",
     auth: {
       user: "hryoga8723@gmail.com",
-      pass: "200201026",
+      pass: "20020126",
     },
   });
 
